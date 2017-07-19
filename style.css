@@ -1,0 +1,55 @@
+*{
+  padding: 0;
+  margin: 0;
+}
+.container {
+  background-color: blue;
+}
+
+.cards {
+  display: inline-block;
+  height: 350px;
+  width: 250px;;
+}
+
+.ace {
+display: inline-block;
+float: top;
+width: 100px;
+height: 50px;
+background-color: blue;
+}
+
+.aceHolder {
+  position: absolute;
+  margin-left: 250px;
+  width: 220px;
+  height: 50px;
+  background-color: white;
+}
+#aceDisplay {
+  float: right;
+  width: 40%;
+  height: 50px;
+  background-color: green;
+}
+
+.scoreKeeper {
+  float: right;
+  background-color: green;
+  width: 50px;
+  height: 50px;
+}
+
+.button {
+  display: inline-block;
+  height: 100px;
+  width: 100px;
+
+  background-color: red;
+
+}
+
+.hidden {
+  visibility: hidden;
+}
