@@ -1,29 +1,79 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>My Quarter1 project</title>
-    <link rel="stylesheet" href="style.css"/>
-    <script src="jquery-3.2.1.min.js"></script>
-  </head>
-  <body>
-    <div class="container">
-      <div class="scoreKeeper">0
-    </div>
-      <div class="aceHolder"> Ace is set to
-        <div id="aceDisplay"></div>
+
+<head>
+  <meta charset="utf-8">
+  <title>My Quarter1 project</title>
+  <link rel="stylesheet" href="style.css" />
+  <script type="text/javascript" src="homepage.js"></script>
+  <script src="jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+  <!--greeting page  -->
+  <div class="visable greeting col-md-6 col-md-offset-3">
+    <div class="visable deckRow">
+      <div class="visable homePageButton" id="deckButton">Number of Decks to play with:
       </div>
-      <div class="cards">
+
+      <!-- number of deck -->
+      <div class="visable dropdown">
+        <button onclick="dropDown()" class="dropbtn">Dropdown</button>
+        <div id="myDropdown" class="dropdown-content">
+          <a href="#" id="1deck">1 Deck</a>
+          <a href="#" id="2deck">2 Deck</a>
+          <a href="#" id="3deck">3 Deck</a>
+        </div>
       </div>
-      <button class="button" id="higher"> Higher
-      </button>
-      <button class="button" id="lower"> Lower
-      </button>
-      <button class="hidden" id="High">High
-      </button>
-      <button class="hidden" id="Low">Low
-      </button>
     </div>
-<script type="text/javascript" src="script.js"></script>
-  </body>
+    <!--end of number of deck button  -->
+    <div class="visable deckRow">
+      <div class="visable homePageButton" id="player">Number of players:</div>
+      <div class="visable dropdown">
+        <button onclick="dropDown1()" class="dropbtn">Dropdown</button>
+        <div id="myDropdown1" class="dropdown-content">
+          <a href="#" id="player1">1 Player</a>
+          <a href="#" id="player2">2 Player</a>
+          <a href="#" id="player3">3 Player</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--End of greeting Page  -->
+  <!-- Game -->
+  <div class="invisable container greeting">
+    <div class="invisable scoreKeeper">0
+    </div>
+    <div class="invisable aceHolder col-md-6 col-md-offset-3"> Ace is set to
+      <div class="invisable" id="aceDisplay"></div>
+    </div>
+    <div class="invisable cards" id="cards">
+    </div>
+    <button class="invisable button" id="higher"> Higher
+      </button>
+    <button class="invisable button" id="lower">Lower
+      </button>
+    <button class="invisable hidden" id="High">High
+      </button>
+    <button class="invisable hidden" id="Low">Low
+      </button>
+    <div class="" id="players">
+      <table id="table" style="width: 100% ">
+        <tr>
+          <th>Player1</th>
+          <th class="player-score" id="player-1">0</th>
+          <th>Player2</th>
+          <th id="player-2">0</th>
+          <th>Player3</th>
+          <th id="player-3">0</th>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <!--End of Game.  -->
+  <script type="text/javascript" src="script.js"></script>
+</body>
+
 </html>

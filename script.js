@@ -2,12 +2,12 @@ function setInital() {
   $(document).ready(function() {
     // get deck ID
     $.get("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1", function(data) {
-      // console.log(data)
       var deckID = data["deck_id"];
       //
       // get initial deck photo and value
+      $("#cards").empty();
       $.get("https://deckofcardsapi.com/api/deck/" + deckID + "/draw/?count=1", function(data) {
-        $(".cards").prepend("<img src=" + data["cards"][0]["image"] + ">")
+        $("#cards").prepend("<img src=" + data["cards"][0]["image"] + ">")
         var initalValue = data["cards"][0]["value"]
         //
         // Correcting for FaceCards
@@ -27,23 +27,56 @@ function setInital() {
     })
   })
 }
+// counter function
 
+// Turn Function
 var counter = 0;
-// Ace Function
-$("#High").on("click", function() {
-  $("#Low").unbind("click");
-  $("#High").unbind("click");
-  // gameLoop();
-})
-$("#Low").on("click", function(){
-  $("#High").unbind("click");
-  $("#Low").unbind("click");
-  // gameLoop();
-})
+var turn = 0;
+var player = 1;
+
+function turnCounter() {
+  console.log("totalTurns:", turn)
+  if (turn % 5 === 0 && turn !== = 0) {
+    var scoreTotal = document.getElementsByClassName('player-score').innerHTML;
+    scoreTotal = parseInt(scoreTotal);
+    var newTotal = scoreTotal += counter;
+    $(".player-score").empty();
+    $(".player-score").append(newTotal);
+  }
+  turn++
+  counter = 0;
+  nextPlayer();
+}
+
+function nextPlayer() {
+  if (player === 3 {
+      player = 0
+    } else {
+      player++
+    })
+    var newPlayer = "#player-" + player;
+    $(".player-score").removeClass("player-score");
+    $("")
+}
+
+
+// I consoled log this out without testing -- trying to fix "Low" button
+// // Ace Function
+// $("#High").on("click", function() {
+//   $("#Low").unbind("click");
+//   $("#High").unbind("click");
+//   // gameLoop();
+// })
+// $("#Low").on("click", function(){
+//   $("#High").unbind("click");
+//   $("#Low").unbind("click");
+//   // gameLoop();
+// })
 
 function aceFunction() {
   if ($("#aceDisplay").html() === "") {
     $(".hidden").addClass("ace").removeClass("hidden");
+    $(".ace").removeClass("invisable")
     $("#High").unbind("click");
     $("#Low").unbind("click");
   }
@@ -55,6 +88,7 @@ function gameLoop(prev, deck) {
   $("#lower").unbind("click");
 
 
+
   // Higher Function
   $("#higher").on("click", function() {
     $.get("https://deckofcardsapi.com/api/deck/" + deck + "/draw/?count=1", function(data) {
@@ -62,13 +96,13 @@ function gameLoop(prev, deck) {
 
 
       // Appending new cardImage
-      $(".cards").empty();
-      $(".cards").prepend("<img src=" + data["cards"][0]["image"] + ">")
+      $("#cards").empty();
+      $("#cards").prepend("<img src=" + data["cards"][0]["image"] + ">")
 
       // Correcting for FaceCards
       if (newCardValue === "KING" || newCardValue === "QUEEN" || newCardValue === "JACK") {
         newCardValue = 10
-      } else if (newCardValue === "ACE" && $("#aceDisplay:empty").length) {
+      } else if (newCardValue === "ACE" && $("#aceDisplay").html() === "") {
         aceFunction();
         $("#higher").addClass("hidden").removeClass("button");
         $("#lower").addClass("hidden").removeClass("button")
@@ -94,6 +128,7 @@ function gameLoop(prev, deck) {
           $(".scoreKeeper").append(counter)
         } else {
           counter -= 1;
+          turnCounter();
           $(".scoreKeeper").empty();
           $(".scoreKeeper").append(counter)
         }
@@ -102,8 +137,8 @@ function gameLoop(prev, deck) {
 
 
           // Appending new cardImage
-          $(".cards").empty();
-          $(".cards").prepend("<img src=" + data["cards"][0]["image"] + ">")
+          $("#cards").empty();
+          $("#cards").prepend("<img src=" + data["cards"][0]["image"] + ">")
         })
         gameLoop(newCardValue, deck);
       })
@@ -112,13 +147,13 @@ function gameLoop(prev, deck) {
 
       // Checking High Values
       $("#higher").unbind("click");
-      console.log("Higer Prev And New", prev, newCardValue);
       if (prev <= newCardValue) {
         counter += 1;
         $(".scoreKeeper").empty();
         $(".scoreKeeper").append(counter)
       } else {
         counter -= 1;
+        turnCounter();
         $(".scoreKeeper").empty();
         $(".scoreKeeper").append(counter)
       }
@@ -137,13 +172,13 @@ function gameLoop(prev, deck) {
 
 
       // Appending new cardImage
-      $(".cards").empty();
-      $(".cards").prepend("<img src=" + data["cards"][0]["image"] + ">")
+      $("#cards").empty();
+      $("#cards").prepend("<img src=" + data["cards"][0]["image"] + ">")
 
       // Correcting for FaceCards
       if (newCardValue === "KING" || newCardValue === "QUEEN" || newCardValue === "JACK") {
         newCardValue = 10
-      } else if (newCardValue === "ACE") {
+      } else if (newCardValue === "ACE" && $("#aceDisplay").html() === "") {
         aceFunction();
         $("#higher").addClass("hidden").removeClass("button");
         $("#lower").addClass("hidden").removeClass("button")
@@ -169,6 +204,7 @@ function gameLoop(prev, deck) {
           $(".scoreKeeper").append(counter)
         } else {
           counter -= 1;
+          turnCounter();
           $(".scoreKeeper").empty();
           $(".scoreKeeper").append(counter)
         }
@@ -177,8 +213,8 @@ function gameLoop(prev, deck) {
 
 
           // Appending new cardImage
-          $(".cards").empty();
-          $(".cards").prepend("<img src=" + data["cards"][0]["image"] + ">")
+          $("#cards").empty();
+          $("#cards").prepend("<img src=" + data["cards"][0]["image"] + ">")
         })
         gameLoop(newCardValue, deck);
       })
@@ -186,12 +222,12 @@ function gameLoop(prev, deck) {
 
       // checking value of card
       if (prev >= newCardValue) {
-        console.log("Lower Prev And New", prev, newCardValue);
+        // console.log("Lower Prev And New", prev, newCardValue);
         counter++;
         $(".scoreKeeper").empty();
         $(".scoreKeeper").append(counter)
       } else {
-        counter--;
+        turnCounter();
         $(".scoreKeeper").empty();
         $(".scoreKeeper").append(counter)
       }
@@ -201,13 +237,5 @@ function gameLoop(prev, deck) {
   })
 }
 
-// $("#High").on("click", function() {
-//   $("#aceDisplay").empty();
-//   $("#aceDisplay").append(11);
-//   $(".ace").addClass("hidden").removeClass("ace")
-// })
-// $("#Low").on("click", function() {
-//   $("#aceDisplay").empty();
-//   $("#aceDisplay").append(1)
-// })
+
 setInital();
