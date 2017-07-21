@@ -43,10 +43,12 @@ var playerSet = 1
 $("#player2").on("click", function() {
   playerSet = 2;
   console.log(playerSet);
+  $(".container").css("background-image", 'none')
 })
 $("#player3").on("click", function() {
   playerSet = 3;
   console.log(playerSet);
+  $(".container").css("background-image", 'none')
 })
 
 function turnCounter() {
@@ -163,9 +165,9 @@ function gameLoop(prev, deck) {
         $(".scoreKeeper").append(counter)
       } else {
         counter--;
-        turnCounter();
         $(".scoreKeeper").empty();
         $(".scoreKeeper").append(counter)
+        turnCounter();
       }
       gameLoop(newCardValue, deck);
     })
@@ -236,9 +238,9 @@ function gameLoop(prev, deck) {
         $(".scoreKeeper").empty();
         $(".scoreKeeper").append(counter)
       } else {
-        turnCounter();
         $(".scoreKeeper").empty();
         $(".scoreKeeper").append(counter)
+        turnCounter();
       }
       gameLoop(newCardValue, deck);
 

@@ -42,7 +42,7 @@ d3.selectAll(".invisable")
   d3.selectAll(".visable")
     .classed("visable", false);
   d3.select(".greeting").transition()
-    .style("background-color", "blue")
+    // .style("background-color", "blue")
     .style("height", "1px")
     .style("margin-bottom", "0px")
 
@@ -60,7 +60,7 @@ d3.selectAll(".invisable")
   d3.selectAll(".visable")
     .classed("visable", false);
   d3.select(".greeting").transition()
-    .style("background-color", "blue")
+    // .style("background-color", "blue")
     .style("height", "1px")
     .style("margin-bottom", "0px")
 
