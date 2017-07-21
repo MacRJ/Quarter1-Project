@@ -1,7 +1,13 @@
-function setInital() {
-  $(document).ready(function() {
+function setInital(deckNum) {
+  // $(document).ready(function() {
+
+    // Setting Deck Number
+
     // get deck ID
-    $.get("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1", function(data) {
+    $.get("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=" + deckNum, function(data) {
+      console.log("deckinfo:", data);
+
+
       var deckID = data["deck_id"];
       //
       // get initial deck photo and value
@@ -25,7 +31,7 @@ function setInital() {
         })
       })
     })
-  })
+  // })
 }
 // counter function
 
@@ -33,45 +39,51 @@ function setInital() {
 var counter = 0;
 var turn = 0;
 var player = 1;
+var playerSet = 1
+
+// set Playernumber of players
+$("#player2").on("click", function() {
+  playerSet = 2;
+  console.log(playerSet);
+})
+$("#player3").on("click", function() {
+  playerSet = 3;
+  console.log(playerSet);
+})
 
 function turnCounter() {
-  console.log("totalTurns:", turn)
-  if (turn % 5 === 0 && turn !== = 0) {
-    var scoreTotal = document.getElementsByClassName('player-score').innerHTML;
+  console.log("current turn:", turn);
+  if (turn !== 0 && turn % 5 === 0) {
+    // console.log("totalTurns:", turn)
+    var scoreTotal = document.getElementsByClassName('player-score')[0].innerHTML;
     scoreTotal = parseInt(scoreTotal);
     var newTotal = scoreTotal += counter;
     $(".player-score").empty();
     $(".player-score").append(newTotal);
+    nextPlayer();
+    counter = 0;
   }
   turn++
-  counter = 0;
-  nextPlayer();
 }
 
 function nextPlayer() {
-  if (player === 3 {
-      player = 0
-    } else {
-      player++
-    })
-    var newPlayer = "#player-" + player;
-    $(".player-score").removeClass("player-score");
-    $("")
+  console.log("player:", player);
+  console.log("nextPlayerHeard:", playerSet);
+  if (player === playerSet) {
+    player = 1
+  } else {
+    player++
+  }
+
+  var newPlayer = "#player-" + player;
+  console.log("newPlayer:", newPlayer);
+  $(".player-score").removeClass("player-score");
+  $(newPlayer).addClass("player-score");
+
 }
 
 
-// I consoled log this out without testing -- trying to fix "Low" button
-// // Ace Function
-// $("#High").on("click", function() {
-//   $("#Low").unbind("click");
-//   $("#High").unbind("click");
-//   // gameLoop();
-// })
-// $("#Low").on("click", function(){
-//   $("#High").unbind("click");
-//   $("#Low").unbind("click");
-//   // gameLoop();
-// })
+
 
 function aceFunction() {
   if ($("#aceDisplay").html() === "") {
@@ -123,12 +135,11 @@ function gameLoop(prev, deck) {
         $("#Low").addClass("hidden").removeClass("ace");
         newCardValue = 11
         if (prev <= 11) {
-          counter += 1;
+          counter++;
           $(".scoreKeeper").empty();
           $(".scoreKeeper").append(counter)
         } else {
-          counter -= 1;
-          turnCounter();
+          counter--;
           $(".scoreKeeper").empty();
           $(".scoreKeeper").append(counter)
         }
@@ -148,11 +159,11 @@ function gameLoop(prev, deck) {
       // Checking High Values
       $("#higher").unbind("click");
       if (prev <= newCardValue) {
-        counter += 1;
+        counter++;
         $(".scoreKeeper").empty();
         $(".scoreKeeper").append(counter)
       } else {
-        counter -= 1;
+        counter--;
         turnCounter();
         $(".scoreKeeper").empty();
         $(".scoreKeeper").append(counter)
@@ -199,12 +210,11 @@ function gameLoop(prev, deck) {
         $("#Low").addClass("hidden").removeClass("ace");
         newCardValue = 1
         if (prev >= 1) {
-          counter += 1;
+          counter++;
           $(".scoreKeeper").empty();
           $(".scoreKeeper").append(counter)
         } else {
-          counter -= 1;
-          turnCounter();
+          counter--;
           $(".scoreKeeper").empty();
           $(".scoreKeeper").append(counter)
         }
@@ -237,5 +247,12 @@ function gameLoop(prev, deck) {
   })
 }
 
-
-setInital();
+deckNum = 1;
+$("#2deck").on("click", function() {
+  deckNum = 2;
+  setInital(deckNum);
+})
+$("#3deck").on("click", function() {
+  deckNum = 3;
+  setInital(deckNum);
+})

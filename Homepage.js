@@ -16,7 +16,7 @@ window.addEventListener("load", function() {
 // initalizing game
 // player1
 $("#player1").on("click",function(){
-  setInital();
+  // setInital();
 d3.selectAll(".invisable")
   .classed("invisable", false)
 
@@ -33,7 +33,7 @@ d3.selectAll(".invisable")
 })
 // player2
 $("#player2").on("click",function(){
-  setInital();
+  // setInital();
 d3.selectAll(".invisable")
   .classed("invisable", false)
 
@@ -51,7 +51,7 @@ d3.selectAll(".invisable")
 })
 // player3
 $("#player3").on("click",function(){
-  setInital();
+  // setInital();
 d3.selectAll(".invisable")
   .classed("invisable", false)
 
