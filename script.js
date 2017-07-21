@@ -1,43 +1,41 @@
 function setInital(deckNum) {
   // $(document).ready(function() {
 
-    // Setting Deck Number
-
-    // get deck ID
-    $.get("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=" + deckNum, function(data) {
-      console.log("deckinfo:", data);
+  // get deck ID
+  $.get("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=" + deckNum, function(data) {
+    console.log("deckinfo:", data);
 
 
-      var deckID = data["deck_id"];
+    var deckID = data["deck_id"];
+    //
+    // get initial deck photo and value
+    $("#cards").empty();
+    $.get("https://deckofcardsapi.com/api/deck/" + deckID + "/draw/?count=1", function(data) {
+      $("#cards").prepend("<img src=" + data["cards"][0]["image"] + ">")
+      var initalValue = data["cards"][0]["value"]
       //
-      // get initial deck photo and value
-      $("#cards").empty();
-      $.get("https://deckofcardsapi.com/api/deck/" + deckID + "/draw/?count=1", function(data) {
-        $("#cards").prepend("<img src=" + data["cards"][0]["image"] + ">")
-        var initalValue = data["cards"][0]["value"]
-        //
-        // Correcting for FaceCards
-        if (initalValue === "KING" || initalValue === "QUEEN" || initalValue === "JACK") {
-          initalValue = 10;
-        } else if (initalValue === "ACE") {
-          aceFunction()
-        } else {
-          initalValue = parseInt(initalValue)
-        }
-        //
+      // Correcting for FaceCards
+      if (initalValue === "KING" || initalValue === "QUEEN" || initalValue === "JACK") {
+        initalValue = 10;
+      } else if (initalValue === "ACE") {
+        aceFunction()
+      } else {
+        initalValue = parseInt(initalValue)
+      }
+      //
 
-        $(window).ready(function() {
-          gameLoop(initalValue, deckID);
-        })
+      $(window).ready(function() {
+        gameLoop(initalValue, deckID);
       })
     })
+  })
   // })
 }
 // counter function
 
 // Turn Function
 var counter = 0;
-var turn = 0;
+var turn = 1;
 var player = 1;
 var playerSet = 1
 
@@ -53,8 +51,8 @@ $("#player3").on("click", function() {
 
 function turnCounter() {
   console.log("current turn:", turn);
-  if (turn !== 0 && turn % 5 === 0) {
-    // console.log("totalTurns:", turn)
+  if (turn !== 1 && turn % 5 === 0) {
+    console.log("totalTurns:", turn)
     var scoreTotal = document.getElementsByClassName('player-score')[0].innerHTML;
     scoreTotal = parseInt(scoreTotal);
     var newTotal = scoreTotal += counter;
@@ -64,6 +62,7 @@ function turnCounter() {
     counter = 0;
   }
   turn++
+  console.log("turnCounted:", turn);
 }
 
 function nextPlayer() {
